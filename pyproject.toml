@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tian_core"
-version = "0.1.0"
+version = "0.1.1"
 description = "python.thienhang.com"
 authors = ["open-thienhang-com"]
 readme = "README.md"
