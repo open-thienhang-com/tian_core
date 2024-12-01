@@ -1,5 +1,5 @@
 
-
+print("Importing %s" % __file__)
 def singleton(cls):
     """
     A singleton decorator that ensures only one instance of a class is created.
