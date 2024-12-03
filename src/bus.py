@@ -44,8 +44,7 @@ class MessageBus:
 
             return handler(command)
         except Exception as e:
-            traceback.print_exc()
-            raise Exception(f"Error handling command {command}") from e
+            raise e
 
     def print_debug(self):
         cmd_info: List[Dict[str, str]] = []
