@@ -22,7 +22,7 @@ class EmailNotification(AbstractNotification):
                     smtp_server='smtp.sendgrid.net',
                     smtp_port=465,
                     smtp_user='apikey',
-                    smtp_pass='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',
+                    smtp_pass='',
                     data={
                         'username': 'thienhang',
                         'email': 'me@thienhang.com',
