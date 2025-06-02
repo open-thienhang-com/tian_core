@@ -1,6 +1,6 @@
 from functools import wraps
 
-from tian_glog import logger
+from tian_core.logger import logger
 from flask import redirect, request, jsonify, url_for, make_response
 
 # Only get pgae, limit, offest, sort, filter from params

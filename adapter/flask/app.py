@@ -1,4 +1,4 @@
-from tian_glog import logger
+from tian_core.logger import logger
 from flask import Flask, request, redirect, jsonify, render_template, url_for, Blueprint
 from werkzeug.utils import import_string
 from werkzeug.exceptions import HTTPException
@@ -10,7 +10,7 @@ from http import HTTPStatus
 from .config import Config, config_dict
 import os
 from importlib import import_module
-from tian_glog import logger
+from tian_core.logger import logger
 import urllib
 import traceback
 # from .casbin import *

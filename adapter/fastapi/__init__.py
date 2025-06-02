@@ -4,6 +4,7 @@
 from .routes.middleware import metrics_app, AddProcessTimeHeaderMiddleware
 from .routes import docs, health
 from .message import *
+from .config import settings
 from fastapi import FastAPI, HTTPException
 def create_fast_api_service(
     service_name: str = "default",

@@ -5,7 +5,7 @@ from starlette.responses import Response
 from ...config import settings
 
 from fastapi import Request
-from tian_glog import logger
+from tian_core.logger import logger
 import time
 
 import prometheus_client as prometheus

@@ -4,7 +4,7 @@ from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formataddr
 from email.message import EmailMessage
-from tian_glog import logger
+from tian_core.logger import logger
 from string import Template
 import os
 

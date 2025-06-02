@@ -1,5 +1,5 @@
 from tian_core import AbstractNotification
-from tian_glog import logger
+from tian_core.logger import logger
 
 from tian_utils.email import EmailTemplateLoader
 
