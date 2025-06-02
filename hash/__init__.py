@@ -50,8 +50,25 @@ def create_token(identity):
         Returns:
             str: The generated authentication token.
         """
-        token = base64.b64encode(secrets.token_bytes(32)).decode()
-        return encode({'identity': identity, 'exp': time.time() + 3600}, token)
+        return encode({'identity': identity, 'exp': time.time() + 3600}, os.getenv('SECRET', 'default_secret_key'))
+
+
+def decode_token(token):
+    """
+    Decodes an authentication token to retrieve the user identity.
+
+    Args:
+        token (str): The authentication token to decode.
+
+    Returns:
+        str: The user identity extracted from the token.
+    """
+    try:
+        decoded = decode(token, os.getenv('SECRET', 'default_secret_key'))
+        return decoded.get('identity')
+    except Exception as e:
+        return None
+    
 
 def create_refresh_token(identity):
     """
@@ -110,5 +127,3 @@ def create_session(device_id:str, username:str, secret_key:str):
         'expiry': time.time() + 3600
     }
     return hashlib.sha256(session).hexdigest()
-
-

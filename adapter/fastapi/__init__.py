@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from .routes.middleware import metrics_app, AddProcessTimeHeaderMiddleware
+# from starlette.middleware.sessions import SessionMiddleware
 from .routes import docs, health
 from .message import *
 from .config import settings
@@ -32,6 +33,7 @@ def create_fast_api_service(
 
     app.mount("/_/metrics", app=metrics_app)
     app.add_middleware(AddProcessTimeHeaderMiddleware)
+    # app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
     app.include_router(docs.router, prefix="/_", tags=["Systems"])
     app.include_router(health.router, prefix="/_", tags=["Systems"])
     return app
