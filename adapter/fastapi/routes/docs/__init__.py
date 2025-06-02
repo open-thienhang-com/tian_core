@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 router = APIRouter()
 custom_logo_url = "https://thienhang.com/images/thienhang.com-black.svg"
-service_name = "MyService"  # <- Bạn nên truyền từ config
+service_name = "MyService"
 
 @router.get("/", include_in_schema=False)
 async def custom_home(request: Request):
