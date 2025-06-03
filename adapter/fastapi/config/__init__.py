@@ -68,6 +68,12 @@ class Settings(BaseSettings):
     MONGO_CONNECT_TIMEOUT: int = 2000
     MONGO_SERVER_SELECTION_TIMEOUT: int = 2000
 
+    REDIS_URI: str = "redis://localhost:6379/0"
+    REDIS_USERNAME: str = ""
+    REDIS_PASSWORD: str = ""
+    REDIS_DB: int = 0
+    REDIS_MAX_CONNECTIONS: int = 10
+
 
     @computed_field  # type: ignore[prop-decorator]
     @property
