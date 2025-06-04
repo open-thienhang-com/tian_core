@@ -8,6 +8,11 @@ def decode(token, secret):
     """Decode a JWT token using the given secret."""
     return jwt.decode(token, secret, algorithms=['HS256'])
 
+def decode_no_verify(token):
+    """Decode a JWT token without verifying the signature."""
+    return jwt.get_unverified_header(token)
+
+
 def decode_unsafe(token, secret):
     """Decode a JWT token using the given secret without verifying the signature."""
     return jwt.decode(token, secret, algorithms=['HS256'], verify=False)

@@ -11,7 +11,7 @@ import secrets
 import os
 import hashlib
 import binascii
-from .jwt import encode, decode
+from .jwt import encode, decode, decode_no_verify
 
 def generate_mfa_code(username):
     """
@@ -55,7 +55,7 @@ def create_token(identify, payload, secret):
         return encode(headers=headers, payload=payload, secret=secret)
 
 
-def decode_token(token):
+def decode_token(token, secret):
     """
     Decodes an authentication token to retrieve the user identity.
 
@@ -66,12 +66,26 @@ def decode_token(token):
         str: The user identity extracted from the token.
     """
     try:
-        decoded = decode(token, os.getenv('SECRET', 'default_secret_key'))
+        decoded = decode(token, secret)
         return decoded.get('identity')
     except Exception as e:
         return None
     
+def decode_token_no_verify(token):
+    """
+    Decodes an authentication token without verifying the signature.
 
+    Args:
+        token (str): The authentication token to decode.
+
+    Returns:
+        str: The user identity extracted from the token.
+    """
+    try:
+        decoded = decode_no_verify(token)  # No secret for verification
+        return decoded.get('identity')
+    except Exception as e:
+        return None
 def create_refresh_token(identify, secret):
     """
     Creates a refresh token for a user.
