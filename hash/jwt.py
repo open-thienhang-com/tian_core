@@ -1,8 +1,8 @@
 import jwt
 
-def encode(payload, secret):
+def encode(headers, payload, secret):
     """Encode a payload into a JWT token using the given secret."""
-    return jwt.encode(payload, secret, algorithm='HS256')
+    return jwt.encode(payload=payload, algorithm='HS256', headers=headers, key=secret)
 
 def decode(token, secret):
     """Decode a JWT token using the given secret."""
@@ -19,6 +19,3 @@ def decode_unsafe_no_verify(token):
 def decode_unsafe_no_verify_no_alg(token):
     """Decode a JWT token without verifying the signature and without specifying the algorithm."""
     return jwt.decode(token, verify=False, algorithms=['none'])
-
-
-

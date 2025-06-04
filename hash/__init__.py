@@ -12,7 +12,6 @@ import os
 import hashlib
 import binascii
 from .jwt import encode, decode
-from .hash import *
 
 def generate_mfa_code(username):
     """
@@ -40,7 +39,7 @@ def hash_pass(password):
     return (salt + pwdhash)  # return bytes
 
 
-def create_token(identity):
+def create_token(identify, payload, secret):
         """
         Creates an authentication token for a user.
 
@@ -50,7 +49,10 @@ def create_token(identity):
         Returns:
             str: The generated authentication token.
         """
-        return encode({'identity': identity, 'exp': time.time() + 3600}, os.getenv('SECRET', 'default_secret_key'))
+        headers = {
+            'identity': identify,
+        }
+        return encode(headers=headers, payload=payload, secret=secret)
 
 
 def decode_token(token):
@@ -70,7 +72,7 @@ def decode_token(token):
         return None
     
 
-def create_refresh_token(identity):
+def create_refresh_token(identify, secret):
     """
     Creates a refresh token for a user.
 
@@ -80,8 +82,11 @@ def create_refresh_token(identity):
     Returns:
         str: The generated refresh token.
     """
-    refresh_token = base64.b64encode(secrets.token_bytes(32)).decode()
-    return encode({'identity': identity, 'exp': time.time() + 3600}, refresh_token)
+    headers = {
+        'identity': identify,
+    }
+    payload = {'exp': time.time() + 3600*24}
+    return encode(headers=headers, payload=payload, secret=secret) #TODO: Need to check
 
 
 def hash_password(password):
@@ -110,7 +115,7 @@ def verify_password(plain_password, hashed_password):
     """
     return hash_password(plain_password) == hashed_password
 
-def create_session(device_id:str, username:str, secret_key:str):
+def create_session(device_id:str, username:str):
     """
     Creates a session for a user.
 
@@ -121,9 +126,11 @@ def create_session(device_id:str, username:str, secret_key:str):
         str: The generated session ID.
     """
     # session_id = base64.b64encode(secrets.token_bytes(32)).decode()
-    session = {
-        'device_id': device_id,
-        'username': username,
-        'expiry': time.time() + 3600
-    }
-    return hashlib.sha256(session).hexdigest()
+    # session = {
+    #     'device_id': device_id,
+    #     'username': username,
+    #     'expiry': time.time() + 3600
+    # }
+    session = f"{device_id}:{username}:{int(time.time() + 3600)}"
+    
+    return hashlib.sha256(session.encode()).hexdigest()

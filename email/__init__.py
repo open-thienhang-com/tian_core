@@ -6,9 +6,7 @@ from tian_core.logger import logger
 
 # --- Functional Version ---
 
-def get_template_dir(custom_dir=None):
-    if custom_dir:
-        return custom_dir
+def get_template_dir(custom_dir=""):
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 
 def load_templates(template_dir):
@@ -52,36 +50,4 @@ def prepare_and_send_email(template_name, data, to_email, subject, smtp_user, sm
         smtp_port=465,
         smtp_user=smtp_user,
         smtp_pass=smtp_pass,
-    )
-
-# --- Notification Scenarios ---
-
-def send_account_successfully_email(email, smtp_user, smtp_pass):
-    prepare_and_send_email(
-        template_name="org-invitation.html",
-        to_email=email,
-        subject="🚀 Account Notification | developer@thienhang",
-        data=email,
-        smtp_user=smtp_user,
-        smtp_pass=smtp_pass
-    )
-
-def send_active_user_email(data, smtp_user, smtp_pass):
-    prepare_and_send_email(
-        template_name="verify-email",
-        to_email=data["email"],
-        subject="🚀 Account Notification | developer@thienhang",
-        data=data,
-        smtp_user=smtp_user,
-        smtp_pass=smtp_pass
-    )
-
-def renew_password(data, smtp_user, smtp_pass):
-    prepare_and_send_email(
-        template_name="resetpassword.html",
-        to_email=data["email"],
-        subject="🚀 Account Notification | developer@thienhang",
-        data=data,
-        smtp_user=smtp_user,
-        smtp_pass=smtp_pass
     )
