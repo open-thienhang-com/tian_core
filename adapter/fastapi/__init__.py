@@ -6,7 +6,9 @@ from .routes.middleware import metrics_app, AddProcessTimeHeaderMiddleware
 from .routes import docs, health
 from .message import *
 from .config import settings
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
 def create_fast_api_service(
     service_name: str = "default",
     config_cls: list = None,
@@ -16,7 +18,9 @@ def create_fast_api_service(
     """
     Create a new FastAPI application instance.
     """
-    
+    reusable_oauth2 = HTTPBearer(
+        scheme_name='Authorization'
+    )
     
     app = FastAPI(
         title=service_name,
