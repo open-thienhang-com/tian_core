@@ -69,6 +69,7 @@ class Settings(BaseSettings):
     MONGO_SERVER_SELECTION_TIMEOUT: int = 2000
 
     REDIS_URI: str = "redis://localhost:6379/0"
+    REDIS_PORT: int = 6379
     REDIS_USERNAME: str = ""
     REDIS_PASSWORD: str = ""
     REDIS_DB: int = 0

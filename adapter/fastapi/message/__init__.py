@@ -51,11 +51,18 @@ DEFAULT_RESPONSES = {
         "model": ErrorResponse,
         "description": "error get meta data - id not found",
     },
-    401: {"description": "Unauthorized. Valid authentication is required."},
+    401: {
+        "model": ErrorResponse,
+        "description": "Unauthorized. Valid authentication is required."
+    },
     403: {
+        "model": ErrorResponse,
         "description": "Forbidden. You don't have permission to access this resource."
     },
-    404: {"description": "Not found. The requested resource does not exist."},
+    404: {
+        "model": ErrorResponse,
+        "description": "Not found. The requested resource does not exist."
+    },
     409: {"description": "Conflict. Resource already exists or state conflict."},
     422: {"description": "Unprocessable Entity. Input failed validation checks."},
     502: {"description": "Bad gateway. Upstream service sent an invalid response."},
