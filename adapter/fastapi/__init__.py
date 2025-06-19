@@ -12,6 +12,7 @@ from .exceptions import CacheException, ConflictException, NotFoundException, Un
 from fastapi.responses import JSONResponse
 from tian_core.logger import logger
 import traceback
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 def create_fast_api_service(
     service_name: str = "default",
@@ -80,16 +81,27 @@ def create_fast_api_service(
             content=ErrorResponse(message="Invalid Value", error=str(exc), data=None).dict()
         )
     
-    @app.exception_handler(Exception)
-    async def global_exception_handler(request: Request, exc: Exception):
-        # Log traceback for debugging (optional)
-        logger.critical(f"Unhandled exception: {traceback.format_exc()}")
-
+    # @app.exception_handler(Exception)
+    # async def global_exception_handler(request: Request, exc: Exception):
+    #     # Log traceback for debugging (optional)
+    #     # logger.critical(f"Unhandled exception: {traceback.format_exc()}")
+    #     return JSONResponse(
+    #         status_code=500,
+    #         content=ErrorResponse(
+    #             message="Internal server error",
+    #             error=str(exc),
+    #             data=None
+    #         ).dict()
+    #     )
+    
+    @app.exception_handler(StarletteHTTPException)
+    async def custom_http_exception_handler(request, exc):
+        logger.error(f"HTTP Exception: {exc.detail}")
         return JSONResponse(
-            status_code=500,
+            status_code=exc.status_code,
             content=ErrorResponse(
                 message="Internal server error",
-                error=str(exc),
+                error="Some error occurred",
                 data=None
             ).dict()
         )
